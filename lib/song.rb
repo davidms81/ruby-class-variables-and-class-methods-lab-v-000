@@ -1,17 +1,18 @@
 class Song
+
   attr_accessor :name, :artist, :genre
 
   @@count = 0
-  @@artists = []
   @@genres = []
+  @@artists = []
 
   def initialize(name, artist, genre)
     @name = name
     @artist = artist
     @genre = genre
     @@count += 1
-    @@artists << artist
     @@genres << genre
+    @@artists << artist
   end
 
   def self.count
@@ -19,42 +20,19 @@ class Song
   end
 
   def self.genres
-    genres_no_duplicates = []
-    @@genres.each do |genre|
-      genres_no_duplicates << genre unless genres_no_duplicates.include?(genre)
-    end
-    genres_no_duplicates
+    @@genres.uniq
   end
 
   def self.artists
-    artists_no_duplicates = []
-    @@artists.each do |artist|
-      artists_no_duplicates << artist unless artists_no_duplicates.include?(artist)
-    end
-    artists_no_duplicates
+    @@artists.uniq
   end
 
   def self.genre_count
-    genre_count = {}
-    @@genres.each do |genre|
-      if genre_count[genre]
-        genre_count[genre] += 1
-      else
-        genre_count[genre] = 1
-      end
-    end
-    genre_count
+   @@genres.uniq.map { |x| [x, @@genres.count(x)] }.to_h
   end
 
   def self.artist_count
-    artist_count = {}
-    @@artists.each do |artist|
-      if artist_count[artist]
-        artist_count[artist] += 1
-      else
-        artist_count[artist] = 1
-      end
-    end
-    artist_count
+   @@artists.uniq.map { |x| [x, @@artists.count(x)] }.to_h
   end
+
 end
